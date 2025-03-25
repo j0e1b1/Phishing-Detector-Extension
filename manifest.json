@@ -1,0 +1,25 @@
+{
+  "manifest_version": 2,
+  "name": "Phishing Detector",
+  "version": "1.0",
+  "description": "Feeds the current URL to a native ML model to detect phishing websites and warns the user if necessary.",
+  "permissions": [
+    "webRequest",
+    "webRequestBlocking",
+    "<all_urls>",
+    "nativeMessaging"
+  ],
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "phishingdetector@example.com"
+    }
+  },
+  "web_accessible_resources": [
+    "warning.html",
+    "warning.js"
+  ]
+}
+

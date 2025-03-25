@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Phishing Warning</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f8d7da;
+      color: #721c24;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+    #warning-box {
+      border: 2px solid #f5c6cb;
+      background-color: #f8d7da;
+      padding: 30px;
+      border-radius: 8px;
+      text-align: center;
+    }
+    button {
+      margin: 5px;
+      padding: 10px 20px;
+      background-color: #721c24;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #5a1017;
+    }
+  </style>
+</head>
+<body>
+  <div id="warning-box">
+    <h1>Warning: Potential Phishing Site</h1>
+    <p>This website has been detected as a potential phishing site. Loading it may be unsafe.</p>
+    <button type="button" id="proceed">Proceed Anyway</button>
+    <button id="goback">Go Back</button>
+  </div>
+  <script src="warning.js"></script>
+</body>
+</html>
+
