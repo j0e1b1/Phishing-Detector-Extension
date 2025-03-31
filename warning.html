@@ -1,48 +1,233 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
-  <meta charset="UTF-8">
-  <title>Phishing Warning</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f8d7da;
-      color: #721c24;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      margin: 0;
-    }
-    #warning-box {
-      border: 2px solid #f5c6cb;
-      background-color: #f8d7da;
-      padding: 30px;
-      border-radius: 8px;
-      text-align: center;
-    }
-    button {
-      margin: 5px;
-      padding: 10px 20px;
-      background-color: #721c24;
-      color: #fff;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #5a1017;
-    }
-  </style>
-</head>
-<body>
-  <div id="warning-box">
-    <h1>Warning: Potential Phishing Site</h1>
-    <p>This website has been detected as a potential phishing site. Loading it may be unsafe.</p>
-    <button type="button" id="proceed">Proceed Anyway</button>
-    <button id="goback">Go Back</button>
-  </div>
-  <script src="warning.js"></script>
-</body>
-</html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Security Warning - PhiCompass</title>
+        <style>
+            body {
+                font-family: "Segoe UI", "Roboto", "Helvetica Neue", sans-serif;
+                margin: 0;
+                padding: 0;
+                background-color: #f7f7f7;
+                color: #333;
+                line-height: 1.5;
+            }
 
+            .interstitial-wrapper {
+                box-sizing: border-box;
+                margin: 0 auto;
+                max-width: 600px;
+                padding: 40px;
+            }
+
+            .icon {
+                height: 72px;
+                margin-bottom: 20px;
+                color: #db4437;
+                text-align: center;
+            }
+
+            .icon-svg {
+                width: 72px;
+                height: 72px;
+            }
+
+            .main-content {
+                border-radius: 8px;
+                box-shadow: 0 1px 5px rgba(255, 0, 0, 0.75);
+                background-color: #fff;
+                padding: 30px;
+                margin-bottom: 30px;
+            }
+
+            .main-content h1 {
+                color: #db4437;
+                font-size: 24px;
+                font-weight: 600;
+                margin-top: 0;
+                margin-bottom: 16px;
+            }
+
+            p {
+                margin-top: 0;
+                margin-bottom: 16px;
+            }
+
+            .url-container {
+                background-color: #f8f8f8;
+                border-left: 4px solid #eee;
+                padding: 12px;
+                margin: 20px 0;
+                word-break: break-all;
+                font-family: monospace;
+                font-size: 14px;
+            }
+
+            .button-container {
+                margin-top: 30px;
+            }
+
+            .button {
+                border-radius: 4px;
+                cursor: pointer;
+                display: inline-block;
+                font-size: 14px;
+                font-weight: 500;
+                padding: 10px 24px;
+                text-align: center;
+                transition: box-shadow 150ms cubic-bezier(0.4, 0, 0.2, 1);
+                user-select: none;
+            }
+
+            .primary-button {
+                background-color: #1a73e8;
+                border: none;
+                color: white;
+                margin-right: 12px;
+            }
+
+            .primary-button:hover {
+                background-color: #1765cc;
+            }
+
+            .secondary-button {
+                background-color: #fff;
+                border: 1px solid #dadce0;
+                color: #1a73e8;
+            }
+
+            .secondary-button:hover {
+                background-color: rgba(26, 115, 232, 0.04);
+            }
+
+            .details {
+                margin-top: 30px;
+                color: #5f6368;
+            }
+
+            .details-summary {
+                cursor: pointer;
+                outline: none;
+            }
+
+            .extra-option-container {
+                padding: 16px 0;
+            }
+
+            .option-button {
+                background-color: #fff;
+                border: 1px solid #dadce0;
+                border-radius: 4px;
+                color: #5f6368;
+                cursor: pointer;
+                display: inline-block;
+                font-size: 14px;
+                font-weight: 500;
+                margin-right: 16px;
+                padding: 8px 16px;
+            }
+
+            .option-button:hover {
+                background-color: rgba(95, 99, 104, 0.04);
+            }
+
+            .error-code {
+                color: #777;
+                font-size: 12px;
+                margin-top: 40px;
+            }
+
+            /* PhiCompass branding */
+            .brand {
+                text-align: center;
+                margin-top: 40px;
+                margin-bottom: 20px;
+                color: #5f6368;
+                font-size: 14px;
+            }
+
+            .brand-logo {
+                font-weight: bold;
+                color: #1a73e8;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="interstitial-wrapper">
+            <div class="icon">
+                <svg
+                    class="icon-svg"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                        fill="#db4437"
+                        d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 11h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"
+                    />
+                </svg>
+            </div>
+
+            <div class="main-content">
+                <h1>Deceptive site ahead</h1>
+                <p>
+                    PhiCompass has detected that the website you're trying to
+                    visit might be a phishing website attempting to steal your
+                    personal information.
+                </p>
+                <p>The website you are attempting to visit is:</p>
+                <div class="url-container" id="suspicious-url">loading...</div>
+
+                <p>
+                    Attackers on <span id="domain-name">this site</span> may
+                    trick you into doing something dangerous like installing
+                    software or revealing personal information like passwords or
+                    credit cards.
+                </p>
+
+                <div class="button-container">
+                    <button id="go-back" class="button primary-button">
+                        Back to safety
+                    </button>
+                </div>
+            </div>
+
+            <details class="details">
+                <summary class="details-summary">
+                    I understand the risks and wish to continue
+                </summary>
+                <div class="extra-option-container">
+                    <p>
+                        If you believe this website is safe, you can proceed at
+                        your own risk:
+                    </p>
+                    <button id="continue-once" class="option-button">
+                        Continue just once
+                    </button>
+                    <button id="continue-always" class="option-button">
+                        Always allow this site
+                    </button>
+                </div>
+            </details>
+
+            <div class="error-code">
+                PhiCompass: SEC_ERROR_PHISHING_DETECTED
+            </div>
+
+            <div class="brand">
+                Protected by <span class="brand-logo">PhiCompass</span>
+            </div>
+        </div>
+
+        <script src="warning.js"></script>
+        <script>
+            // Extract domain name for more specific warning
+            document.addEventListener("DOMContentLoaded", function () {
+                const urlParams = new URLSearchParams(window.location.search);
+                const suspiciousUrl = urlParams.get("url");
+                const urlObj = new URL(suspiciousUrl);
+                document.getElementById("domain-name").textContent =
+                    urlObj.hostname;
+            });
+        </script>
+    </body>
+</html>

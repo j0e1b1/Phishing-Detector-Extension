@@ -1,0 +1,353 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>PhiCompass</title>
+        <style>
+            body {
+                font-family: "Segoe UI", "Roboto", "Helvetica Neue", sans-serif;
+                margin: 0;
+                padding: 0;
+                background-color: #f8f9fa;
+                color: #202124;
+                font-size: 14px;
+                width: 340px;
+                overflow-x: hidden;
+            }
+
+            .header {
+                background-color: #1a73e8;
+                color: white;
+                padding: 14px 16px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+            .header h1 {
+                font-size: 18px;
+                font-weight: 500;
+                margin: 0;
+            }
+
+            .logo {
+                margin-right: 10px;
+                width: 24px;
+                height: 24px;
+            }
+
+            .content {
+                padding: 16px;
+            }
+
+            .status-card {
+                background-color: white;
+                border-radius: 8px;
+                box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+                padding: 16px;
+                margin-bottom: 16px;
+            }
+
+            .status-header {
+                font-weight: 500;
+                margin-bottom: 12px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+            .status-icon {
+                width: 20px;
+                height: 20px;
+                margin-right: 8px;
+            }
+
+            .score-display {
+                display: flex;
+                align-items: center;
+            }
+
+            .score-value {
+                font-weight: bold;
+                margin-left: 8px;
+            }
+
+            .stats {
+                display: flex;
+                justify-content: space-between;
+                margin: 16px 0;
+            }
+
+            .stat-item {
+                text-align: center;
+                flex: 1;
+            }
+
+            .stat-value {
+                font-size: 24px;
+                font-weight: 500;
+                color: #1a73e8;
+                margin-bottom: 4px;
+            }
+
+            .stat-label {
+                color: #5f6368;
+                font-size: 12px;
+            }
+
+            .tabs {
+                display: flex;
+                border-bottom: 1px solid #dadce0;
+                margin-bottom: 16px;
+            }
+
+            .tab {
+                padding: 8px 16px;
+                cursor: pointer;
+                color: #5f6368;
+                margin-right: 8px;
+                position: relative;
+            }
+
+            .tab.active {
+                color: #1a73e8;
+                font-weight: 500;
+            }
+
+            .tab.active::after {
+                content: "";
+                position: absolute;
+                bottom: -1px;
+                left: 0;
+                right: 0;
+                height: 3px;
+                background-color: #1a73e8;
+                border-radius: 3px 3px 0 0;
+            }
+
+            .tab-content {
+                display: none;
+                max-height: 250px;
+                overflow-y: auto;
+            }
+
+            .tab-content.active {
+                display: block;
+            }
+
+            .list-container {
+                background-color: white;
+                border-radius: 8px;
+                box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+                padding: 8px;
+                margin-bottom: 16px;
+            }
+
+            .url-item {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 8px;
+                border-bottom: 1px solid #f1f1f1;
+            }
+
+            .url-item:last-child {
+                border-bottom: none;
+            }
+
+            .url-text {
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: 260px;
+            }
+
+            .remove-btn {
+                background-color: transparent;
+                color: #5f6368;
+                border: none;
+                border-radius: 50%;
+                width: 24px;
+                height: 24px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                margin-left: 8px;
+                flex-shrink: 0;
+            }
+
+            .remove-btn:hover {
+                background-color: rgba(95, 99, 104, 0.1);
+            }
+
+            .remove-btn-icon {
+                width: 16px;
+                height: 16px;
+            }
+
+            .empty-list {
+                color: #5f6368;
+                text-align: center;
+                padding: 16px;
+            }
+
+            .button {
+                display: block;
+                width: 100%;
+                padding: 8px 0;
+                background-color: #1a73e8;
+                color: white;
+                border: none;
+                border-radius: 4px;
+                font-size: 14px;
+                font-weight: 500;
+                cursor: pointer;
+            }
+
+            .button:hover {
+                background-color: #1765cc;
+            }
+
+            .secondary-button {
+                background-color: white;
+                color: #1a73e8;
+                border: 1px solid #dadce0;
+            }
+
+            .secondary-button:hover {
+                background-color: rgba(26, 115, 232, 0.04);
+            }
+
+            .footer {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 8px 16px 16px;
+                color: #5f6368;
+                font-size: 12px;
+            }
+
+            /* Status indicators */
+            .safe {
+                color: #0d652d;
+            }
+
+            .unsafe {
+                color: #c5221f;
+            }
+
+            .unknown {
+                color: #d93025;
+            }
+
+            .username {
+                color: #ffffff;
+                font-weight: 500;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="header">
+            <div style="display: flex; align-items: center">
+                <!-- Compass Icon -->
+                <svg
+                    class="logo"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                        fill="white"
+                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-5.5-2.5l7.51-3.49L17.5 6.5 9.99 9.99 6.5 17.5zm5.5-6.6c.61 0 1.1.49 1.1 1.1s-.49 1.1-1.1 1.1-1.1-.49-1.1-1.1.49-1.1 1.1-1.1z"
+                    />
+                </svg>
+                <h1>PhiCompass</h1>
+            </div>
+            <div class="username">127.0.0.1:5000</div>
+        </div>
+
+        <div class="content">
+            <!-- Current site status -->
+            <div class="status-card">
+                <div class="status-header">Current Website Status</div>
+                <div
+                    id="current-url"
+                    style="
+                        margin-bottom: 8px;
+                        font-size: 13px;
+                        word-break: break-all;
+                    "
+                ></div>
+                <div id="status" class="unknown">
+                    <div class="score-display">
+                        <span>Status: </span>
+                        <span id="score-value" class="score-value"
+                            >Checking...</span
+                        >
+                    </div>
+                </div>
+            </div>
+
+            <!-- Statistics -->
+            <div class="status-card">
+                <div class="status-header">Protection Statistics</div>
+                <div class="stats">
+                    <div class="stat-item">
+                        <div id="threats-blocked" class="stat-value">0</div>
+                        <div class="stat-label">Threats Blocked</div>
+                    </div>
+                    <div class="stat-item">
+                        <div id="sites-whitelisted" class="stat-value">0</div>
+                        <div class="stat-label">Sites Trusted</div>
+                    </div>
+                    <div class="stat-item">
+                        <div id="total-checks" class="stat-value">0</div>
+                        <div class="stat-label">Checks Run</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="tabs">
+                <div class="tab active" data-tab="whitelist">Trusted Sites</div>
+                <div class="tab" data-tab="blacklist">Blocked Sites</div>
+                <div class="tab" data-tab="temp">Temp. Allowed</div>
+            </div>
+
+            <!-- Tab content -->
+            <div class="tab-content active" id="whitelist">
+                <div class="list-container" id="whitelist-items">
+                    <div class="empty-list">Loading...</div>
+                </div>
+                <button id="clear-whitelist" class="button secondary-button">
+                    Clear Trusted Sites
+                </button>
+            </div>
+
+            <div class="tab-content" id="blacklist">
+                <div class="list-container" id="blacklist-items">
+                    <div class="empty-list">Loading...</div>
+                </div>
+                <button id="clear-blacklist" class="button secondary-button">
+                    Clear Blocked Sites
+                </button>
+            </div>
+
+            <div class="tab-content" id="temp">
+                <div class="list-container" id="temp-items">
+                    <div class="empty-list">Loading...</div>
+                </div>
+                <button id="clear-temp" class="button secondary-button">
+                    Clear Temporary Allowed
+                </button>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div>PhiCompass</div>
+            <div>v1.0-beta</div>
+        </div>
+
+        <script src="popup.js"></script>
+    </body>
+</html>

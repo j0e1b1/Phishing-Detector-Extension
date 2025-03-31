@@ -1,28 +1,35 @@
-(function() {
-  // Extract the original URL from the query parameter.
-  const params = new URLSearchParams(window.location.search);
-  const originalUrl = params.get('url');
+document.addEventListener("DOMContentLoaded", function () {
+  console.log("[PhishingDetector] Warning page loaded");
 
-  // Proceed button: load the original site.
-  document.getElementById('proceed').addEventListener('click', function() {
-    if (originalUrl) {
-      browser.runtime.sendMessage({ action: "allow", url: originalUrl })
-        .then(response => {
-          // After receiving confirmation from the background script,
-          // navigate to the original URL.
-          window.location.assign(originalUrl);
-        });
-    }
+  // Get URL from query parameters
+  const urlParams = new URLSearchParams(window.location.search);
+  const suspiciousUrl = urlParams.get("url");
+
+  // Display the URL
+  document.getElementById("suspicious-url").textContent = suspiciousUrl;
+
+  // Handle "Go Back" button
+  document.getElementById("go-back").addEventListener("click", function () {
+    window.history.go(-2);
   });
 
-  // Go Back button: return to the previous page, if available.
-  document.getElementById('goback').addEventListener('click', function() {
-    if (window.history.length > 1) {
-      window.history.back();
-    } else {
-      // If no history exists, redirect to a safe default (e.g., about:home).
-      window.location.href = "about:home";
-    }
-  });
-})();
+  // Handle "Continue Just Once" button
+  document
+    .getElementById("continue-once")
+    .addEventListener("click", function () {
+      browser.runtime.sendMessage({
+        action: "allowOnce",
+        url: suspiciousUrl,
+      });
+    });
 
+  // Handle "Always Allow" button
+  document
+    .getElementById("continue-always")
+    .addEventListener("click", function () {
+      browser.runtime.sendMessage({
+        action: "allowAlways",
+        url: suspiciousUrl,
+      });
+    });
+});
